@@ -6,15 +6,20 @@ export class DynamicsRoutes {
     this.router = Router()
   }
 
+  /**
+   * integrate routes in the service based on controllers
+   */
   setupRoutes () {
     const appController = new AppController()
 
-    const baseUrl = '/v1/'
-
-    this.router.use(`${baseUrl}`, appController.routes())
+    this.router.use('/', appController.routes())
   }
 
+  /**
+   * integrate all routes in the instance service
+   * @param app
+   */
   attachToApp (app) {
-    app.use('/api', this.router)
+    app.use('/api/v1', this.router)
   }
 }
