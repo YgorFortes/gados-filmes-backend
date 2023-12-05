@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { AppController } from './modules/app/app.controller'
+import { UserController } from './modules/user/user.controller'
 
 export class DynamicsRoutes {
   constructor () {
@@ -11,8 +12,11 @@ export class DynamicsRoutes {
    */
   setupRoutes () {
     const appController = new AppController()
+    const userController = new UserController()
 
     this.router.use('/', appController.routes())
+
+    this.router.use('/user', userController.routes())
   }
 
   /**
