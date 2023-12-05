@@ -1,15 +1,20 @@
 version: '3'
 
 services:
-  api:
-    container_name: api
-    build: .
+  app:
+    container_name: backend
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /app/node_modules
+      - ./src:/app/src
     ports:
       - "3000:3000"
-    volumes:
-      - ./src:/app/src
-    depends_on:
-      - postgresql
+    command:
+      - npm
+      - run
+      - dev
 
   postgresql:
     image: "postgres:latest"
