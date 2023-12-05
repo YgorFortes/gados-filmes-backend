@@ -19,4 +19,4 @@ ENV POSTGRES_DB=gados
 ENV POSTGRES_HOST=db
 ENV POSTGRES_PORT=5432
 
-CMD ["npm", "run", "dev"]
+#CMD ["npm", "run", "dev"]
