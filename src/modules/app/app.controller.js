@@ -1,13 +1,11 @@
-import { Router } from 'express'
+import { ControllerUtils } from '../../utils/controller/controller.utils'
 import { AppService } from './services/app.service'
 
-export class AppController {
+export class AppController extends ControllerUtils {
   constructor () {
-    this.router = Router()
+    super()
 
     this.appService = new AppService()
-
-    this.setupRouter()
   }
 
   /**
@@ -24,13 +22,5 @@ export class AppController {
     this.router.get('/', (req, res) => {
       res.send(this.appService.responseMainRouter())
     })
-  }
-
-  /**
-   * retrieve all defined routes in the controller to be set in the service
-   * @return {*}
-   */
-  routes () {
-    return this.router
   }
 }
