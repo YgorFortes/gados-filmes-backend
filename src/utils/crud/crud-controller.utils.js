@@ -1,11 +1,6 @@
-import { Router } from 'express'
+import { ControllerUtils } from '../controller/controller.utils'
 
-export class CrudControllerUtils {
-  constructor () {
-    this.router = Router()
-    this.setupRouter()
-  }
-
+export class CrudControllerUtils extends ControllerUtils {
   setupRouter () {
     this.create()
     this.findAll()
@@ -14,17 +9,13 @@ export class CrudControllerUtils {
     this.delete()
   }
 
-  routes () {
-    return this.router
-  }
+  create () { }
 
-  create () {}
-
-  findAll () {}
+  findAll () { }
 
   findOne () { }
 
-  update () {}
+  update () { }
 
-  delete () {}
+  delete () { }
 }
