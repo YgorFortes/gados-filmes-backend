@@ -1,4 +1,4 @@
-import { ControllerUtils } from '../controller/controller.utils'
+import { ControllerUtils } from '../controller/controller.utils.js'
 
 export class CrudControllerUtils extends ControllerUtils {
   setupRouter () {
