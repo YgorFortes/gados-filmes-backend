@@ -1,5 +1,5 @@
 import express from 'express'
-import { DynamicsRoutes } from './dynamics.router'
+import { DynamicsRoutes } from './dynamics.router.js'
 
 class Serve {
   constructor () {
