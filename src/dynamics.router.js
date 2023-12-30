@@ -1,6 +1,6 @@
 import { Router } from 'express'
-import { AppController } from './modules/app/app.controller'
-import { UserController } from './modules/user/user.controller'
+import { AppController } from './modules/app/app.controller.js'
+import { UserController } from './modules/user/user.controller.js'
 
 export class DynamicsRoutes {
   constructor () {
