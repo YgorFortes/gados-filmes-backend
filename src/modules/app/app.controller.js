@@ -1,5 +1,5 @@
-import { ControllerUtils } from '../../utils/controller/controller.utils'
-import { AppService } from './services/app.service'
+import { ControllerUtils } from '../../utils/controller/controller.utils.js'
+import { AppService } from './services/app.service.js'
 
 export class AppController extends ControllerUtils {
   constructor () {

@@ -1,5 +1,5 @@
-import { UserRepository } from '../repository/user.repository'
-import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils'
+import { UserRepository } from '../repository/user.repository.js'
+import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js'
 
 export class UserService extends CrudServiceUtils {
   constructor () {

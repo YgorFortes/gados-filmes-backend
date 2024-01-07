@@ -1,6 +1,6 @@
-import { UserService } from './services/user.service'
-import { ValidatorSchema } from './validators/validator.schema'
-import { CrudControllerUtils } from '../../utils/crud/crud-controller.utils'
+import { UserService } from './services/user.service.js'
+import { ValidatorSchema } from './validators/validator.schema.js'
+import { CrudControllerUtils } from '../../utils/crud/crud-controller.utils.js'
 
 export class UserController extends CrudControllerUtils {
   constructor () {
@@ -12,8 +12,10 @@ export class UserController extends CrudControllerUtils {
   }
 
   create () {
-    this.router.get('/', (req, res) => {
-      res.send({ message: 'this is my message' })
+    this.router.get('/', async (req, res) => {
+      const users = await this.userService.findAll()
+
+      return res.status(200).send(users)
     })
   }
 }

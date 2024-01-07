@@ -1,5 +1,4 @@
 {
   "watch": ["src"],
-  "ext": "js,json",
-  "exec": "node -r esm"
+  "ext": "js,json"
 }

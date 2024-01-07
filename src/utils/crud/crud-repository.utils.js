@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client/edge'
-import { CrudServiceUtils } from './crud-service.utils'
+import { PrismaClient } from '@prisma/client'
+import { CrudServiceUtils } from './crud-service.utils.js'
 
 export class CrudRepositoryUtils extends CrudServiceUtils {
   constructor () {
