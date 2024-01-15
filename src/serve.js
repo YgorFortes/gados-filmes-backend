@@ -1,5 +1,6 @@
 import express from 'express'
 import { DynamicsRoutes } from './dynamics.router.js'
+import { Logger } from './infra/debug/debug.service.js'
 
 class Serve {
   constructor () {
@@ -8,6 +9,8 @@ class Serve {
     this.dynamicsRoutes = new DynamicsRoutes()
 
     this.setRoutes()
+
+    this.logger = new Logger(Serve.name)
   }
 
   /**
@@ -24,7 +27,7 @@ class Serve {
   createServer () {
     const serverPort = process.env.APP_PORT || 3000
     this.expressInstance.listen(serverPort, () => {
-      console.log(`Server is running on port ${serverPort}`)
+      this.logger.dispatch('verbose', `Server is running on port ${serverPort}`)
     })
   }
 }
