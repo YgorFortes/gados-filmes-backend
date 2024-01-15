@@ -1,4 +1,7 @@
 {
   "watch": ["src"],
-  "ext": "js,json"
+  "ext": "js,json",
+  "events": {
+    "start": "clear"
+  }
 }
