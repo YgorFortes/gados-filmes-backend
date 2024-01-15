@@ -1,6 +1,6 @@
 import express from 'express'
 import { DynamicsRoutes } from './dynamics.router.js'
-import { Logger } from './infra/debug/debug.service.js'
+import { Logger } from './infra/logger/logger.service.js'
 
 class Serve {
   constructor () {
