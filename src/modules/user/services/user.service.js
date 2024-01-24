@@ -3,12 +3,14 @@ import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js'
 import { UserValidatorSchema } from '../validators/validator.schema.js'
 import { CustomHttpError } from '../../../erros/custom.http.error.js'
 import { UtilsBcrypt } from '../utils/bcrypt.js'
+import { Logger } from '../../../infra/logger/logger.service.js'
 
 export class UserService extends CrudServiceUtils {
   constructor () {
     super()
     this.userRepository = new UserRepository()
     this.userValidatorSchema = new UserValidatorSchema()
+    this.logger = new Logger()
   }
 
   async findAll () {
