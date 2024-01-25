@@ -1,14 +1,16 @@
 import { UserRepository } from '../repository/user.repository.js'
 import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js'
-import { UserValidatorSchema } from '../validators/validator.schema.js'
-import { CustomHttpError } from '../../../erros/custom.http.error.js'
+import { ValidateUserSchema } from '../validators/validator.schema.js'
 import { UtilsBcrypt } from '../utils/bcrypt.js'
+import { Logger } from '../../../infra/logger/logger.service.js'
+import { CustomHttpError } from '../../../erros/custom.http.error.js'
 
 export class UserService extends CrudServiceUtils {
   constructor () {
     super()
     this.userRepository = new UserRepository()
-    this.userValidatorSchema = new UserValidatorSchema()
+    this.validateUserSchema = new ValidateUserSchema()
+    this.logger = new Logger()
   }
 
   async findAll () {
@@ -19,19 +21,17 @@ export class UserService extends CrudServiceUtils {
     try {
       const { senha, ...restObject } = dataUse
       const hash = await UtilsBcrypt.hashPassword(senha)
-      console.log(hash)
-      console.log(restObject)
       const newUserIfHash = {
         nome: restObject.nome,
         login: restObject.login,
         email: restObject.email,
         senha: hash
       }
-      const userValidated = await this.userValidatorSchema.registerUser(newUserIfHash)
-      const newUserCreated = this.userRepository.createUser(userValidated)
-      return newUserCreated
+      const userValidated = await this.validateUserSchema.validateUserToRegister(newUserIfHash)
+      return this.userRepository.createUser(userValidated)
     } catch (error) {
       CustomHttpError.checkAndThrowError(error)
+      this.logger.dispatch('error', error.message)
     }
   }
 }
