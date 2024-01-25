@@ -3,6 +3,7 @@ import { AppController } from './modules/app/app.controller.js'
 import { UserController } from './modules/user/user.controller.js'
 import { CheckUserExist } from './middlewares/check.user.exist.js'
 import { ErrorMiddlewares } from './middlewares/error.midlewares.js'
+import { CheckPasswordsEqual } from './middlewares/check.if.passwords.equal.js'
 
 export class DynamicsRoutes {
   constructor () {
@@ -21,7 +22,7 @@ export class DynamicsRoutes {
     const errorMiddlewares = new ErrorMiddlewares()
 
     this.router.use('/', appController.routes())
-    this.router.use('/', checkUserExist.findUser(), userController.routes())
+    this.router.use('/', checkUserExist.findUser(), CheckPasswordsEqual.checkPasswordsEqual(), userController.routes())
 
     this.router.use(errorMiddlewares.handleRequestErrors())
     this.router.use(errorMiddlewares.handleErro404())
