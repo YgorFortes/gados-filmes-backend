@@ -16,4 +16,46 @@ model User {
   login String @unique
   email String @unique
   senha String
+  movies Movies_users []
 }
+
+model Movie {
+  id            Int      @id @default(autoincrement())
+  imdb_id       Int      @unique
+  title         String   @db.VarChar(255)
+  year          Int
+  rated         String   @db.VarChar(255)
+  released     DateTime
+  runtime       String   @db.VarChar(255)
+  genre         String   @db.VarChar(255)
+  director      String   @db.VarChar(255)
+  writer        String   @db.VarChar(255)
+  actors        String   @db.Text
+  plot          String   @db.Text
+  language      String   @db.VarChar(255)
+  country       String   @db.VarChar(255)
+  awards        String   @db.VarChar(255)
+  poster        String   @db.VarChar(255)
+  ratings       String   @db.VarChar(255)
+  metascore     String   @db.VarChar(255)
+  imdb_rating   String   @db.VarChar(255)
+  imdb_votes    String   @db.VarChar(255)
+  type          String   @db.VarChar(255)
+  dvd           String   @db.VarChar(255)
+  box_office    String   @db.VarChar(255)
+  production    String   @db.VarChar(255)
+  website       String   @db.VarChar(255)
+  users Movies_users[]
+}
+
+
+model Movies_users {
+  id Int @id @default(autoincrement())
+  idusuarios  Int
+  idfilmes  Int
+  classificacao  Int
+  user User @relation(fields: [idusuarios ], references: [id])
+  movie Movie @relation(fields: [idfilmes], references: [id])
+}
+
+
