@@ -20,11 +20,10 @@ model User {
 
 model Movie {
   id            Int      @id @default(autoincrement())
-  imdb_id       Int      @unique
+  imdb_id       String   @unique @db.VarChar(255)
   title         String   @db.VarChar(255)
-  year          Int
   rated         String   @db.VarChar(255)
-  released     DateTime
+  released      DateTime
   runtime       String   @db.VarChar(255)
   genre         String   @db.VarChar(255)
   director      String   @db.VarChar(255)
@@ -35,13 +34,8 @@ model Movie {
   country       String   @db.VarChar(255)
   awards        String   @db.VarChar(255)
   poster        String   @db.VarChar(255)
-  ratings       String   @db.VarChar(255)
   metascore     String   @db.VarChar(255)
   imdb_rating   String   @db.VarChar(255)
   imdb_votes    String   @db.VarChar(255)
   type          String   @db.VarChar(255)
-  dvd           String   @db.VarChar(255)
-  box_office    String   @db.VarChar(255)
-  production    String   @db.VarChar(255)
-  website       String   @db.VarChar(255)
 }
