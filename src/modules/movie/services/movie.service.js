@@ -1,37 +1,30 @@
-import { UserRepository } from '../repository/user.repository.js'
+import { MovieRepository } from '../repository/movie.repository.js'
 import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js'
-import { UserValidatorSchema } from '../validators/validator.schema.js'
 import { CustomHttpError } from '../../../erros/custom.http.error.js'
-import { UtilsBcrypt } from '../utils/bcrypt.js'
 import { Logger } from '../../../infra/logger/logger.service.js'
+import { OmdbService } from './omdb.service.js'
 
-export class UserService extends CrudServiceUtils {
+export class MovieService extends CrudServiceUtils {
   constructor () {
     super()
-    this.userRepository = new UserRepository()
-    this.userValidatorSchema = new UserValidatorSchema()
-    this.logger = new Logger()
+    this.movieRepository = new MovieRepository()
+    this.logger = new Logger(MovieService.name)
+    this.omdbService = new OmdbService()
   }
 
-  async findAll () {
-    return this.userRepository.findAll()
-  }
-
-  async createUser (dataUse) {
+  async findMovie (titulo) {
     try {
-      const { senha, ...restObject } = dataUse
-      const hash = await UtilsBcrypt.hashPassword(senha)
-      console.log(hash)
-      console.log(restObject)
-      const newUserIfHash = {
-        nome: restObject.nome,
-        login: restObject.login,
-        email: restObject.email,
-        senha: hash
+      const movie = await this.movieRepository.findMovie(titulo)
+      if (!movie) {
+        const responseOmdbCreateMovie = await this.omdbService.createMovieOmdb(titulo)
+        if (!responseOmdbCreateMovie) {
+          const mensagem = { mensagem: 'Filme não encontrado.' }
+          return mensagem
+        }
+        const movie = await this.movieRepository.findMovie(titulo)
+        return movie
       }
-      const userValidated = await this.userValidatorSchema.registerUser(newUserIfHash)
-      const newUserCreated = this.userRepository.createUser(userValidated)
-      return newUserCreated
+      return movie
     } catch (error) {
       CustomHttpError.checkAndThrowError(error)
     }
