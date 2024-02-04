@@ -13,7 +13,6 @@ export class OmdbService extends CrudServiceUtils {
   }
 
   async createMovieOmdb (titulo) {
-    console.log('chamou o createMovieIMDB')
     try {
       const url = `https://www.omdbapi.com/?t=${titulo}&apikey=${process.env.KEY_OMDB}`
       const response = await axios.get(url)
@@ -27,7 +26,7 @@ export class OmdbService extends CrudServiceUtils {
         imdb_id: dataMovie.imdbID,
         title: dataMovie.Title,
         rated: dataMovie.Rated,
-        released: await FormatDate.formatDateToBbStandard(dataMovie.Released),
+        released: FormatDate.formatDateToBbStandard(dataMovie.Released),
         runtime: dataMovie.Runtime,
         genre: dataMovie.Genre,
         director: dataMovie.Director,
