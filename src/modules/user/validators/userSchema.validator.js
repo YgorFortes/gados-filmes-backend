@@ -1,4 +1,4 @@
-import { object, string } from 'yup'
+import { object, string } from 'yup';
 
 export class ValidateUserSchema {
   async validateUserToRegister (value) {
@@ -7,7 +7,7 @@ export class ValidateUserSchema {
       email: string().email('O campo precisa ser um email válido.').trim().lowercase().required('O campo email obrigatório.'),
       senha: string().trim().required('O campo senha é obrigatório.').matches(/^[^\s]+$/, 'O campo senha não pode conter espaços entre os caracteres.'),
       nome: string().trim().required('O campo nome é obrigatório.')
-    }).noUnknown()
-    return await RegisterUserValidatorSchema.validate(value)
+    }).noUnknown();
+    return await RegisterUserValidatorSchema.validate(value);
   }
 }

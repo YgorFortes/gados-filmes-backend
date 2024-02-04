@@ -1,18 +1,18 @@
-import { ControllerUtils } from '../../utils/controller/controller.utils.js'
-import { AppService } from './services/app.service.js'
+import { ControllerUtils } from '../../utils/controller/controller.utils.js';
+import { AppService } from './services/app.service.js';
 
 export class AppController extends ControllerUtils {
   constructor () {
-    super()
+    super();
 
-    this.appService = new AppService()
+    this.appService = new AppService();
   }
 
   /**
    * centralize all defined routes into a single method
    */
   setupRouter () {
-    this.appInformation()
+    this.appInformation();
   }
 
   /**
@@ -20,7 +20,7 @@ export class AppController extends ControllerUtils {
    */
   appInformation () {
     this.router.get('/', (req, res) => {
-      res.send(this.appService.responseMainRouter())
-    })
+      res.send(this.appService.responseMainRouter());
+    });
   }
 }
