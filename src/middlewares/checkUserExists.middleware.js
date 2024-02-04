@@ -1,23 +1,23 @@
-import { UserRepository } from '../modules/user/repository/user.repository.js'
-import { CustomHttpError } from '../erros/custom.http.error.js'
+import { UserRepository } from '../modules/user/repository/user.repository.js';
+import { CustomHttpError } from '../erros/custom.http.error.js';
 
 export class CheckUserExist {
   constructor () {
-    this.user = new UserRepository()
+    this.user = new UserRepository();
   }
 
   findUser () {
     return async (req, res, next) => {
-      const { login, email } = req.body
+      const { login, email } = req.body;
       try {
-        const user = await this.user.findByLoginOrEmail(login, email)
+        const user = await this.user.findByLoginOrEmail(login, email);
         if (user) {
-          return res.status(409).send({ mensagem: 'Já existe usuário cadastrado com esse e-mail ou login' })
+          return res.status(409).send({ mensagem: 'Já existe usuário cadastrado com esse e-mail ou login' });
         }
-        next()
+        next();
       } catch (error) {
-        CustomHttpError.checkAndThrowError(error)
+        CustomHttpError.checkAndThrowError(error);
       }
-    }
+    };
   }
 }

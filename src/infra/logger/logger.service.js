@@ -1,9 +1,9 @@
-import chalk from 'chalk'
-import { getCurrentTime } from '../../utils/date/hours.utils.js'
+import chalk from 'chalk';
+import { getCurrentTime } from '../../utils/date/hours.utils.js';
 
 export class Logger {
   constructor (className) {
-    this.className = className
+    this.className = className;
   }
 
   /**
@@ -11,26 +11,26 @@ export class Logger {
    * @param {string} message
    */
   dispatch (typeError, message) {
-    message = `[express] ${new Date().toDateString()}, ${getCurrentTime()} [${this.className}] ${message}`
+    message = `[express] ${new Date().toDateString()}, ${getCurrentTime()} [${this.className}] ${message}`;
 
     switch (typeError) {
       case 'error':
-        console.log(chalk.red(chalk.bold(message)))
-        break
+        console.log(chalk.red(chalk.bold(message)));
+        break;
       case 'warn':
-        console.log(chalk.yellow(message))
-        break
+        console.log(chalk.yellow(message));
+        break;
       case 'verbose':
-        console.log(chalk.blue(message))
-        break
+        console.log(chalk.blue(message));
+        break;
       case 'debug':
-        console.log(chalk.magenta(message))
-        break
+        console.log(chalk.magenta(message));
+        break;
       case 'normal':
-        console.log(chalk.green(message))
-        break
+        console.log(chalk.green(message));
+        break;
       default:
-        console.log(chalk.gray(message))
+        console.log(chalk.gray(message));
     }
   }
 }

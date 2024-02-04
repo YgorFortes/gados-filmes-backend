@@ -1,14 +1,14 @@
-import { Router } from 'express'
+import { Router } from 'express';
 
 export class ControllerUtils {
   constructor () {
-    this.router = Router()
-    this.setupRouter()
+    this.router = Router();
+    this.setupRouter();
   }
 
   setupRouter () {}
 
   routes () {
-    return this.router
+    return this.router;
   }
 }
