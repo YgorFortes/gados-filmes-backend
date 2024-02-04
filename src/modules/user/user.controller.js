@@ -1,7 +1,7 @@
 import { UserService } from './services/user.service.js'
-import { ValidateUserSchema } from './validators/validator.schema.js'
 import { CrudControllerUtils } from '../../utils/crud/crud-controller.utils.js'
 import { Logger } from '../../infra/logger/logger.service.js'
+import { ValidateUserSchema } from './validators/userSchema.validator.js'
 
 export class UserController extends CrudControllerUtils {
   constructor () {

@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt'
-import { CustomHttpError } from '../../../erros/custom.http.error.js'
 import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js'
 import { UserRepository } from '../../user/repository/user.repository.js'
-import { AuthValidatorSchema } from '../validators/auth.validator.schema.js'
-import { UtilsAuth } from '../utils/utils.Auth.js'
+
 import { Logger } from '../../../infra/logger/logger.service.js'
+import { AuthValidatorSchema } from '../validators/authSchemma.validator.js'
+import { UtilsAuth } from '../../../utils/auth/auth.utils.js'
+import { CustomHttpError } from '../../../erros/customHttp.error.js'
 
 export class AuthService extends CrudServiceUtils {
   constructor () {

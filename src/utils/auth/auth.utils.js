@@ -1,14 +1,16 @@
 import jsonwebtoken from 'jsonwebtoken'
-import { CustomHttpError } from '../../../erros/custom.http.error.js'
-import { Logger } from '../../../infra/logger/logger.service.js'
+import { CustomHttpError } from '../../erros/customHttp.error.js'
+import { Logger } from '../../infra/logger/logger.service.js'
+
 export class UtilsAuth {
-  constructor(){
+  constructor () {
     this.logger = new Logger(UtilsAuth.name)
   }
+
   createToken (id) {
     try {
       if (!id) {
-        this.logger.dispatch('error','Erro ao criar o token - O ID não foi fornecido como parâmetro.')
+        this.logger.dispatch('error', 'Erro ao criar o token - O ID não foi fornecido como parâmetro.')
         throw new CustomHttpError('Erro ao criar o token.')
       }
 
@@ -16,9 +18,7 @@ export class UtilsAuth {
 
       const secretKey = process.env.SECRET
 
-      const token = jsonwebtoken.sign(payload, secretKey, { expiresIn: '8h' })
-
-      return token
+      return jsonwebtoken.sign(payload, secretKey, { expiresIn: '8h' })
     } catch (error) {
       this.logger.dispatch('error', `Erro durante a criação do token: ${error.message}`)
       CustomHttpError.checkAndThrowError(error)
