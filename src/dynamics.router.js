@@ -1,11 +1,11 @@
-import { Router, json } from 'express';
+import { json, Router } from 'express';
 
-import { CheckPasswordsEqual } from './middlewares/check.if.passwords.equal.js';
-import { CheckUserExist } from './middlewares/check.user.exist.js';
 import { ErrorMiddlewares } from './middlewares/error.middlewares.js';
 import { AppController } from './modules/app/app.controller.js';
 import { AuthController } from './modules/auth/auth.controller.js';
 import { UserController } from './modules/user/user.controller.js';
+import { CheckUserExist } from './middlewares/checkUserExists.middleware.js';
+import { CheckPasswordsEqual } from './middlewares/checkPasswordsEqual.middleware.js';
 
 export class DynamicsRoutes {
   constructor () {

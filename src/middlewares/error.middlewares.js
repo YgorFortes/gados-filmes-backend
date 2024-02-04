@@ -1,6 +1,7 @@
 import yup from 'yup';
-import { CustomHttpError } from '../erros/custom.http.error.js';
 import { Logger } from '../infra/logger/logger.service.js';
+import { CustomHttpError } from '../erros/customHttp.error.js';
+
 export class ErrorMiddlewares {
   constructor () {
     this.logger = new Logger(ErrorMiddlewares.name);

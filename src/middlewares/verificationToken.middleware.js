@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { CustomHttpError } from '../erros/custom.http.error.js';
 import { Logger } from '../infra/logger/logger.service.js';
+import { CustomHttpError } from '../erros/customHttp.error.js';
 
 export class VerificationTokenMiddleware {
   constructor () {
