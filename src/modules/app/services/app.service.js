@@ -1,6 +1,6 @@
 export class AppService {
   responseMainRouter () {
-    return { message: 'Application are online' }
+    return { message: 'Application are online' };
   }
 }
 

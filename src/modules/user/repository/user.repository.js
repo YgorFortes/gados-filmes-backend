@@ -1,8 +1,8 @@
-import { CrudRepositoryUtils } from '../../../utils/crud/crud-repository.utils.js'
+import { CrudRepositoryUtils } from '../../../utils/crud/crud-repository.utils.js';
 
 export class UserRepository extends CrudRepositoryUtils {
   findAll () {
-    return this.prismaClient.user.findMany()
+    return this.prismaClient.user.findMany();
   }
 
   findByLoginOrEmail (login, email) {
@@ -13,6 +13,17 @@ export class UserRepository extends CrudRepositoryUtils {
           { email }
         ]
       }
-    })
+    });
+  }
+
+  createUser (dataUse) {
+    return this.prismaClient.user.create({
+      data: {
+        login: dataUse.login,
+        email: dataUse.email,
+        nome: dataUse.nome,
+        senha: dataUse.senha
+      }
+    });
   }
 }
