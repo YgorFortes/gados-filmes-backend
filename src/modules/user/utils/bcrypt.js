@@ -2,8 +2,7 @@ import bcrypt from 'bcrypt'
 
 export class UtilsBcrypt {
   static async hashPassword (password) {
-    const saltRounds = 10
-    return bcrypt.hash(password, saltRounds)
+    return bcrypt.hash(password, Number(process.env.saltRounds) ?? 10)
   }
 
   static async comparePassword (inputPassword, hashedPassword) {

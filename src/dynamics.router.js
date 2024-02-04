@@ -4,6 +4,8 @@ import { UserController } from './modules/user/user.controller.js'
 import { CheckUserExist } from './middlewares/check.user.exist.js'
 import { ErrorMiddlewares } from './middlewares/error.midlewares.js'
 import { MovieController } from './modules/movie/movie.controller.js'
+import { CheckPasswordsEqual } from './middlewares/check.if.passwords.equal.js'
+import { AuthController } from './modules/auth/auth.controller.js'
 
 export class DynamicsRoutes {
   constructor () {
@@ -21,10 +23,14 @@ export class DynamicsRoutes {
     const checkUserExist = new CheckUserExist()
     const errorMiddlewares = new ErrorMiddlewares()
     const movieController = new MovieController()
+    const authController = new AuthController()
 
     this.router.use('/', appController.routes())
-    this.router.use('/', checkUserExist.findUser(), userController.routes())
+    this.router.use('/', checkUserExist.findUser(), CheckPasswordsEqual.checkPasswordsEqual(), userController.routes())
     this.router.use('/', movieController.routes()) /** This is the route to search for a movie in the OMDB API. After the merge with the login/authentication branch, add the authentication middleware here. */
+    this.router.use('/', authController.routes())
+    this.router.use(errorMiddlewares.handleRequestErrors())
+    this.router.use(errorMiddlewares.handleErro404())
 
     this.router.use(errorMiddlewares.handleRequestErrors())
     this.router.use(errorMiddlewares.handleErro404())
