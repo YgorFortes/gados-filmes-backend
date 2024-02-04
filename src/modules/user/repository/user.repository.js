@@ -15,4 +15,15 @@ export class UserRepository extends CrudRepositoryUtils {
       }
     })
   }
+
+  createUser (dataUse) {
+    return this.prismaClient.user.create({
+      data: {
+        login: dataUse.login,
+        email: dataUse.email,
+        nome: dataUse.nome,
+        senha: dataUse.senha
+      }
+    })
+  }
 }
