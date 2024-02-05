@@ -1,6 +1,6 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { Logger } from '../infra/logger/logger.service.js';
 import { CustomHttpError } from '../erros/customHttp.error.js';
+import { Logger } from '../infra/logger/logger.service.js';
 
 export class VerificationTokenMiddleware {
   constructor () {
@@ -11,9 +11,10 @@ export class VerificationTokenMiddleware {
     return (req, res, next) => {
       const tokenHeaders = req.headers.authorization;
 
-      const token = tokenHeaders && tokenHeaders.split(' ')[1];
+      // eslint-disable-next-line no-unused-vars
+      const [_, token] = tokenHeaders && tokenHeaders.split(' ');
 
-      if (!token) {
+      if (!token || !tokenHeaders) {
         this.logger.dispatch('error', 'Token não foi fornecido. Certifique-se de incluir o token no cabeçalho Authorization.');
         throw new CustomHttpError('Token não existe', 401);
       }
