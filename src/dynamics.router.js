@@ -1,7 +1,6 @@
 import { json, Router } from 'express';
-
-import { CheckPasswordsEqual } from './middlewares/checkPasswordsEqual.middleware.js';
-import { CheckUserExist } from './middlewares/checkUserExists.middleware.js';
+import { CheckPasswordsEqual } from './middlewares/check-passwords-equal.middleware.js';
+import { CheckUserExist } from './middlewares/check-user-exists.middleware.js';
 import { ErrorMiddlewares } from './middlewares/error.middlewares.js';
 import { AppController } from './modules/app/app.controller.js';
 import { AuthController } from './modules/auth/auth.controller.js';

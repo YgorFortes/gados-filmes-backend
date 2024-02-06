@@ -1,4 +1,4 @@
-import { CustomHttpError } from '../../../erros/customHttp.error.js';
+import { CustomHttpError } from '../../../erros/custom-http.error.js';
 import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js';
 import { MovieRepository } from '../repository/movie.repository.js';
 

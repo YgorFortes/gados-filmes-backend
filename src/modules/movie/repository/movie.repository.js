@@ -1,4 +1,4 @@
-import { CustomHttpError } from '../../../erros/customHttp.error.js';
+import { CustomHttpError } from '../../../erros/custom-http.error.js';
 import { CrudRepositoryUtils } from '../../../utils/crud/crud-repository.utils.js';
 
 export class MovieRepository extends CrudRepositoryUtils {
@@ -39,7 +39,7 @@ export class MovieRepository extends CrudRepositoryUtils {
     const counterPage = Math.ceil(totalCount / limit);
 
     const result = {
-      movies,
+      items: movies,
       meta: {
         totalCount,
         counterPage
