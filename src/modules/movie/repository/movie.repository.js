@@ -39,7 +39,7 @@ export class MovieRepository extends CrudRepositoryUtils {
     const counterPage = Math.ceil(totalCount / limit);
 
     const result = {
-      movies,
+      items: movies,
       meta: {
         totalCount,
         counterPage
