@@ -1,6 +1,6 @@
-import { number, object } from 'yup';
+import { number, object, string } from 'yup';
 
-export class ValidateMovieSchema {
+export class MovieValidatorSchema {
   /**
    * @param {object} reqQuery - The query object from Express request.
    *
@@ -13,5 +13,12 @@ export class ValidateMovieSchema {
     }).unknown();
 
     return await movieParamsSchemaValidate.validate(reqQuery);
+  }
+
+  async validateTitleTofindMovie (value) {
+    const findMovieSchema = object({
+      titulo: string().trim().required('O campo titulo é obrigatório')
+    }).noUnknown();
+    return await findMovieSchema.validate(value);
   }
 }
