@@ -7,10 +7,10 @@ import { ValidateUserSchema } from '../validators/user-schema.validator.js';
 
 export class UserService extends CrudServiceUtils {
   constructor () {
-    super();
+    super()
     this.userRepository = new UserRepository();
     this.validateUserSchema = new ValidateUserSchema();
-    this.logger = new Logger();
+    this.logger = new Logger()
   }
 
   async findAll () {
