@@ -2,7 +2,7 @@ import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js';
 import { MovieRepository } from '../repository/movie.repository.js';
 
 import axios from 'axios';
-import { CustomHttpError } from '../../../erros/customHttp.error.js';
+import { CustomHttpError } from '../../../erros/custom-http.error.js';
 import { Logger } from '../../../infra/logger/logger.service.js';
 import { FormatDate } from '../utils/format.date.js';
 
