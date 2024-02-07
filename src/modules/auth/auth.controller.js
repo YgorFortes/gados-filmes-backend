@@ -1,6 +1,6 @@
 import { CrudControllerUtils } from '../../utils/crud/crud-controller.utils.js';
 import { AuthService } from './services/auth.services.js';
-import { AuthValidatorSchema } from './validators/authSchemma.validator.js';
+import { AuthValidatorSchema } from './validators/auth-schema.validator.js';
 
 export class AuthController extends CrudControllerUtils {
   constructor () {
