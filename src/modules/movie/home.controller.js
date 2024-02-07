@@ -1,5 +1,5 @@
 import { CrudControllerUtils } from '../../utils/crud/crud-controller.utils.js';
-import { MovieService } from './services/movie.services.js';
+import { MovieService } from './services/movie.service.js';
 import { ValidateMovieSchema } from './validators/movie-schema.validator.js';
 
 export class HomeController extends CrudControllerUtils {
