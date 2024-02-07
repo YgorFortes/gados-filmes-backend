@@ -1,5 +1,5 @@
+import { CustomHttpError } from '../erros/custom-http.error.js';
 import { UserRepository } from '../modules/user/repository/user.repository.js';
-import { CustomHttpError } from '../erros/customHttp.error.js';
 
 export class CheckUserExist {
   constructor () {

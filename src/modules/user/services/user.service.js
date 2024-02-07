@@ -1,9 +1,9 @@
-import { UserRepository } from '../repository/user.repository.js';
-import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js';
+import { CustomHttpError } from '../../../erros/custom-http.error.js';
 import { Logger } from '../../../infra/logger/logger.service.js';
-import { ValidateUserSchema } from '../validators/userSchema.validator.js';
+import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js';
 import { UtilsBcrypt } from '../../../utils/password/bcrypt.js';
-import { CustomHttpError } from '../../../erros/customHttp.error.js';
+import { UserRepository } from '../repository/user.repository.js';
+import { ValidateUserSchema } from '../validators/user-schema.validator.js';
 
 export class UserService extends CrudServiceUtils {
   constructor () {
