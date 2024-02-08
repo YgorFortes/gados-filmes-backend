@@ -2,6 +2,18 @@ import { CustomHttpError } from '../../../erros/custom-http.error.js';
 import { CrudRepositoryUtils } from '../../../utils/crud/crud-repository.utils.js';
 
 export class MovieRepository extends CrudRepositoryUtils {
+  findMovie (titulo) {
+    return this.prismaClient.movie.findFirst({
+      where: { title: titulo }
+    });
+  }
+
+  findOne (idMovie) {
+    return this.prismaClient.movie.findUnique({
+      where: { id: idMovie }
+    });
+  }
+
   /**
    * Find top-rated movies based on user ratings.
    * @param {Object} filter - The filter object for querying top-rated movies.
