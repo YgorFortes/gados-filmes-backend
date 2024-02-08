@@ -16,6 +16,12 @@ export class UserRepository extends CrudRepositoryUtils {
     });
   }
 
+  findOne (idUser) {
+    return this.prismaClient.user.findUnique({
+      where: { id: idUser }
+    });
+  }
+
   createUser (dataUse) {
     return this.prismaClient.user.create({
       data: {
@@ -23,6 +29,23 @@ export class UserRepository extends CrudRepositoryUtils {
         email: dataUse.email,
         nome: dataUse.nome,
         senha: dataUse.senha
+      }
+    });
+  }
+
+  addMovieToUser (movieUserData, idUser) {
+    const { idFilme, classificacao = null } = movieUserData ?? {};
+
+    return this.prismaClient.movies_users.create({
+      data: { idfilmes: idFilme, classificacao, idusuarios: idUser }
+    });
+  }
+
+  findMovieUserAssociation (idMovie, idUser) {
+    return this.prismaClient.movies_users.findFirst({
+      where: {
+        idfilmes: idMovie,
+        idusuarios: idUser
       }
     });
   }
