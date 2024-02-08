@@ -11,10 +11,14 @@ export class VerificationTokenMiddleware {
     return (req, res, next) => {
       const tokenHeaders = req.headers.authorization;
 
+      if (!tokenHeaders) {
+        throw new CustomHttpError('Token não existe. Certifique-se de incluir o token no cabeçalho Authorization.', 401);
+      }
+
       // eslint-disable-next-line no-unused-vars
       const [_, token] = tokenHeaders && tokenHeaders.split(' ');
 
-      if (!token || !tokenHeaders) {
+      if (!token) {
         this.logger.dispatch('error', 'Token não foi fornecido. Certifique-se de incluir o token no cabeçalho Authorization.');
         throw new CustomHttpError('Token não existe', 401);
       }
