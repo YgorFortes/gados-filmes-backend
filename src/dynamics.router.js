@@ -23,20 +23,16 @@ export class DynamicsRoutes {
     const userController = new UserController();
     const authController = new AuthController();
     const homeController = new HomeController();
-
-    this.router.use('/', appController.routes());
-    this.router.use('/', authController.routes());
-    this.router.use('/user', userController.routes());
-    this.router.use('/', homeController.routes());
     const checkUserExist = new CheckUserExist();
     const errorMiddlewares = new ErrorMiddlewares();
     const movieController = new MovieController();
 
     this.router.use('/', appController.routes());
-    this.router.use('/', checkUserExist.findUser(), CheckPasswordsEqual.checkPasswordsEqual(), userController.routes());
-    this.router.use('/', movieController.routes());
     this.router.use('/', authController.routes());
-
+    this.router.use('/user', userController.routes());
+    this.router.use('/', homeController.routes());
+    this.router.use('/', checkUserExist.findUser(), CheckPasswordsEqual.checkPasswordsEqual(), userController.routes());
+    this.router.use('/movie', movieController.routes());
     this.router.use(errorMiddlewares.handleRequestErrors());
     this.router.use(errorMiddlewares.handleErro404());
   }
