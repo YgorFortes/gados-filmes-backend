@@ -88,7 +88,7 @@ export class UserService extends CrudServiceUtils {
     }
   }
 
-  async findAllMovies (data) {
+  async findAllMoviesUser (data) {
     try {
       let page = data.currentPage;
       let itemsPage = data.itemsPerPage;
@@ -107,7 +107,7 @@ export class UserService extends CrudServiceUtils {
 
       const skipItens = page === 1 ? 0 : (page * itemsPage) - itemsPage;
       const response = {
-        itens: await this.userRepository.findAllMovies(Number(data.idUsuario), Number(skipItens), Number(itemsPage)),
+        itens: await this.userRepository.findAllMoviesUser(Number(data.idUsuario), Number(skipItens), Number(itemsPage)),
         meta: {
           totalCount,
           counterPage
