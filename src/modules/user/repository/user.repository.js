@@ -50,7 +50,7 @@ export class UserRepository extends CrudRepositoryUtils {
     });
   }
 
-  findAllMovies (idUsuario, skipItens, itemsPerPage) {
+  findAllMoviesUser (idUsuario, skipItens, itemsPerPage) {
     return this.prismaClient.movies_users.findMany({
       skip: skipItens,
       take: itemsPerPage,
