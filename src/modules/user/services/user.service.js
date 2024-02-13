@@ -87,4 +87,36 @@ export class UserService extends CrudServiceUtils {
       CustomHttpError.checkAndThrowError(error);
     }
   }
+
+  async findAllMoviesUser (data) {
+    try {
+      let page = data.currentPage;
+      let itemsPage = data.itemsPerPage;
+      if (!data.currentPage) {
+        page = 1;
+      }
+      if (!data.itemsPerPage) {
+        itemsPage = 10;
+      }
+      const totalCount = await this.userRepository.countMoviesUser(Number(data.idUsuario));
+      const counterPage = (totalCount / itemsPage) < 1 ? 1 : Math.ceil((totalCount / itemsPage));
+
+      if (data.currentPage > counterPage) {
+        throw new CustomHttpError('A página requisitada está além do número total de páginas existentes.', 400);
+      }
+
+      const skipItens = page === 1 ? 0 : (page * itemsPage) - itemsPage;
+      const response = {
+        itens: await this.userRepository.findAllMoviesUser(Number(data.idUsuario), Number(skipItens), Number(itemsPage)),
+        meta: {
+          totalCount,
+          counterPage
+        }
+      };
+      return response;
+    } catch (error) {
+      CustomHttpError.checkAndThrowError(error);
+      this.logger.dispatch('error', error.message);
+    }
+  }
 }

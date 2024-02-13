@@ -13,6 +13,7 @@ export class UserController extends CrudControllerUtils {
     this.logger = new Logger();
     this.verificationToken = new VerificationTokenMiddleware();
     this.setupRouter(this.addMovieToUser());
+    this.setupRouter(this.findAllMoviesUser());
   }
 
   create () {
@@ -55,5 +56,19 @@ export class UserController extends CrudControllerUtils {
     const idUser = decodedToken.id;
 
     return idUser;
+  }
+
+  findAllMoviesUser () {
+    this.router.get('/meus-filmes', this.verificationToken.checkAuthToken(), async (req, res, next) => {
+      try {
+        const pageAndItensValidated = await this.validateUserSchema.validateQueryPagination(req.query);
+        const idUsuario = this.getIdUserFromToken(req);
+        const movies = await this.userService.findAllMoviesUser({ idUsuario, pageAndItensValidated });
+        return res.status(200).send(movies);
+      } catch (error) {
+        next(error);
+        this.logger.dispatch('debug', error);
+      }
+    });
   }
 }

@@ -49,4 +49,47 @@ export class UserRepository extends CrudRepositoryUtils {
       }
     });
   }
+
+  findAllMoviesUser (idUsuario, skipItens, itemsPerPage) {
+    return this.prismaClient.movies_users.findMany({
+      skip: skipItens,
+      take: itemsPerPage,
+      where: {
+        idusuarios: idUsuario
+      },
+      select: {
+        movie: {
+          select: {
+            id: true,
+            imdb_id: true,
+            title: true,
+            rated: true,
+            released: true,
+            runtime: true,
+            genre: true,
+            director: true,
+            writer: true,
+            actors: true,
+            plot: true,
+            language: true,
+            country: true,
+            awards: true,
+            poster: true,
+            metascore: true,
+            imdb_rating: true,
+            imdb_votes: true,
+            type: true
+          }
+        }
+      }
+    });
+  }
+
+  countMoviesUser (idUsuario) {
+    return this.prismaClient.movies_users.count({
+      where: {
+        idusuarios: idUsuario
+      }
+    });
+  }
 }

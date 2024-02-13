@@ -12,7 +12,7 @@ export class MovieController extends CrudControllerUtils {
   }
 
   findOne () {
-    this.router.get('/filmes/titulo/:titulo', async (req, res, next) => {
+    this.router.get('/titulo/:titulo', async (req, res, next) => {
       try {
         const titleValidated = await this.validators.validateTitleTofindMovie(req.params);
         const movie = await this.movieService.findMovie(titleValidated.titulo);

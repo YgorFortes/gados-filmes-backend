@@ -25,4 +25,12 @@ export class ValidateUserSchema {
     });
     return await movieBodySchameValidate.validate(reqBody);
   }
+
+  async validateQueryPagination (value) {
+    const ValidateQueryPagination = object({
+      currentPage: number().integer().typeError('O número da página deve ser um número inteiro.'),
+      itemsPerPage: number().integer().typeError('A quantidade de itens por página deve ser um número válido.')
+    }).noUnknown();
+    return await ValidateQueryPagination.validate(value);
+  }
 }
