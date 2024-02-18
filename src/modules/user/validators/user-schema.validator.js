@@ -33,4 +33,11 @@ export class ValidateUserSchema {
     }).noUnknown();
     return await ValidateQueryPagination.validate(value);
   }
+
+  async validateIdMovie (reqBody) {
+    const validateIdFilmes = object({
+      idfilmes: number().typeError('O campo classificacao só recebe números.').integer('O campo classificacao só recebe números interiros.').positive('O campo page só recebe números positivos').required('O campo idfilmes é obrigatório.')
+    }).noUnknown();
+    return await validateIdFilmes.validate(reqBody);
+  }
 }
