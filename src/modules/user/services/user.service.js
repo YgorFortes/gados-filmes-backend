@@ -119,4 +119,17 @@ export class UserService extends CrudServiceUtils {
       this.logger.dispatch('error', error.message);
     }
   }
+
+  async deleteMovieUser (idUsuario, idFilmes) {
+    try {
+      const { count } = await this.userRepository.deleteMovieUser(idUsuario, idFilmes);
+      if (!count) {
+        return { mensagem: 'Filme não localizado na lista do usuário' };
+      }
+      return { mensagem: 'Filme deletado com sucesso' };
+    } catch (error) {
+      CustomHttpError.checkAndThrowError(error);
+      this.logger.dispatch('error', error.message);
+    }
+  }
 }
