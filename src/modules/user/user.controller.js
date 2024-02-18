@@ -14,6 +14,7 @@ export class UserController extends CrudControllerUtils {
     this.verificationToken = new VerificationTokenMiddleware();
     this.setupRouter(this.addMovieToUser());
     this.setupRouter(this.findAllMoviesUser());
+    this.setupRouter(this.deleteMovieUser());
   }
 
   create () {
@@ -65,6 +66,20 @@ export class UserController extends CrudControllerUtils {
         const idUsuario = this.getIdUserFromToken(req);
         const movies = await this.userService.findAllMoviesUser({ idUsuario, pageAndItensValidated });
         return res.status(200).send(movies);
+      } catch (error) {
+        next(error);
+        this.logger.dispatch('debug', error);
+      }
+    });
+  }
+
+  deleteMovieUser () {
+    this.router.delete('/excluir-filme', this.verificationToken.checkAuthToken(), async (req, res, next) => {
+      try {
+        const idUsuario = this.getIdUserFromToken(req);
+        const { idfilmes } = await this.validateUserSchema.validateIdMovie(req.body);
+        const movieDeleteResponse = await this.userService.deleteMovieUser(idUsuario, idfilmes);
+        return res.status(200).send(movieDeleteResponse);
       } catch (error) {
         next(error);
         this.logger.dispatch('debug', error);
