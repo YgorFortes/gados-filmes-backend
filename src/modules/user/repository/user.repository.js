@@ -73,6 +73,16 @@ export class UserRepository extends CrudRepositoryUtils {
     });
   }
 
+  rateMovieByUser (movieData, idUse) {
+    const { movieUserId, classificacao, idFilme } = movieData;
+    return this.prismaClient.movies_users.update({
+      where: { id: movieUserId, idfilmes: idFilme, idusuarios: idUse },
+      data: {
+        classificacao
+      }
+    });
+  }
+
   deleteMovieUser (idusuarios, idfilmes) {
     return this.prismaClient.movies_users.deleteMany({
       where: {
