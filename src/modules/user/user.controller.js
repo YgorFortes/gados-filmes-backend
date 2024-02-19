@@ -13,7 +13,7 @@ export class UserController extends CrudControllerUtils {
     this.logger = new Logger();
     this.verificationToken = new VerificationTokenMiddleware();
     this.userUtils = new UtilsUser();
-    this.setupRouter(this.addMovieToUser(), this.findAllMoviesUser(), this.deleteMovieUser());
+    this.setupRouter(this.addMovieToUser(), this.findAllMoviesUser(), this.deleteMovieUser(), this.rateMovieByUser());
   }
 
   create () {
