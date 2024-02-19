@@ -80,10 +80,33 @@ export class UserService extends CrudServiceUtils {
     try {
       const movieUserAssociation = await this.userRepository.findMovieUserAssociation(idMovie, idUser);
 
-      if (movieUserAssociation) {
-        throw new CustomHttpError('Este filme já está associado à sua conta.', 400);
-      }
+      return movieUserAssociation;
     } catch (error) {
+      CustomHttpError.checkAndThrowError(error);
+    }
+  }
+
+  async rateMovieByUser (dataRate, idUser) {
+    try {
+      await this.movieService.findOne(dataRate.idFilme);
+
+      const movieUserAssociation = await this.verifyMovieUserAssociation(dataRate.idFilme, idUser);
+
+      if (!movieUserAssociation) {
+        throw new CustomHttpError('Este filme não está associado à sua conta. Adicione primeiro em sua biblioteca.', 400);
+      }
+
+      await this.findOne(idUser);
+
+      const rateMovieByUser = await this.userRepository.rateMovieByUser({ movieUserId: movieUserAssociation.id, ...dataRate }, idUser);
+
+      if (!rateMovieByUser) {
+        throw new CustomHttpError('Não foi possível atualizar o filme', 500);
+      }
+
+      return { mensagem: 'Nota atualizada com sucesso.' };
+    } catch (error) {
+      console.log(error);
       CustomHttpError.checkAndThrowError(error);
     }
   }
