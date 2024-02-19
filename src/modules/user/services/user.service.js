@@ -3,6 +3,7 @@ import { Logger } from '../../../infra/logger/logger.service.js';
 import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js';
 import { UtilsBcrypt } from '../../../utils/password/bcrypt.js';
 import { MovieRepository } from '../../movie/repository/movie.repository.js';
+import { MovieService } from '../../movie/services/movie.service.js';
 import { UserRepository } from '../repository/user.repository.js';
 import { ValidateUserSchema } from '../validators/user-schema.validator.js';
 
@@ -11,6 +12,7 @@ export class UserService extends CrudServiceUtils {
     super();
     this.userRepository = new UserRepository();
     this.movieRepository = new MovieRepository();
+    this.movieService = new MovieService();
     this.validateUserSchema = new ValidateUserSchema();
     this.logger = new Logger();
   }
@@ -56,13 +58,13 @@ export class UserService extends CrudServiceUtils {
 
       await this.findOne(idUser);
 
-      const movie = await this.movieRepository.findOne(movieUserData.idFilme);
+      await this.movieService.findOne(movieUserData.idFilme);
 
-      if (!movie) {
-        throw new CustomHttpError('Filme não encontrado', 200);
+      const rateMovieByUser = await this.verifyMovieUserAssociation(movieUserData.idFilme, idUser);
+
+      if (rateMovieByUser) {
+        throw new CustomHttpError('Este filme já está associado à sua conta.', 400);
       }
-
-      await this.verifyMovieUserAssociation(movieUserData.idFilme, idUser);
 
       const movieAddedToUser = await this.userRepository.addMovieToUser(movieUserData, idUser);
 
