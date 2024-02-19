@@ -30,6 +30,20 @@ export class MovieService extends CrudServiceUtils {
     }
   }
 
+  async findOne (idMovie) {
+    try {
+      const movie = await this.movieRepository.findOne(idMovie);
+
+      if (!movie) {
+        throw new CustomHttpError('Filme não encontrado', 200);
+      }
+
+      return movie;
+    } catch (error) {
+      CustomHttpError.checkAndThrowError(error);
+    }
+  }
+
   /**
    * Find top-rated movies based on user ratings.
    * @param {Object} filter - The filter object for querying top-rated movies.
