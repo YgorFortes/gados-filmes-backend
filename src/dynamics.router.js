@@ -2,6 +2,7 @@ import { json, Router } from 'express';
 import { CheckPasswordsEqual } from './middlewares/check-passwords-equal.middleware.js';
 import { CheckUserExist } from './middlewares/check-user-exists.middleware.js';
 import { ErrorMiddlewares } from './middlewares/error.middlewares.js';
+import { VerificationTokenMiddleware } from './middlewares/verification-token.middleware.js';
 import { AppController } from './modules/app/app.controller.js';
 import { AuthController } from './modules/auth/auth.controller.js';
 import { HomeController } from './modules/movie/home.controller.js';
@@ -26,13 +27,14 @@ export class DynamicsRoutes {
     const checkUserExist = new CheckUserExist();
     const errorMiddlewares = new ErrorMiddlewares();
     const movieController = new MovieController();
+    const tokenVerification = new VerificationTokenMiddleware();
 
     this.router.use('/', appController.routes());
     this.router.use('/', authController.routes());
     this.router.use('/user', userController.routes());
     this.router.use('/', homeController.routes());
     this.router.use('/', checkUserExist.findUser(), CheckPasswordsEqual.checkPasswordsEqual(), userController.routes());
-    this.router.use('/movie', movieController.routes());
+    this.router.use('/movie', tokenVerification.checkAuthToken(), movieController.routes());
     this.router.use(errorMiddlewares.handleRequestErrors());
     this.router.use(errorMiddlewares.handleErro404());
   }
