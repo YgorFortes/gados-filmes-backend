@@ -15,6 +15,7 @@ export class UserController extends CrudControllerUtils {
     this.setupRouter(this.addMovieToUser());
     this.setupRouter(this.findAllMoviesUser());
     this.setupRouter(this.deleteMovieUser());
+    this.setupRouter(this.logout());
   }
 
   create () {
@@ -80,6 +81,17 @@ export class UserController extends CrudControllerUtils {
         const { idfilmes } = await this.validateUserSchema.validateIdMovie(req.body);
         const movieDeleteResponse = await this.userService.deleteMovieUser(idUsuario, idfilmes);
         return res.status(200).send(movieDeleteResponse);
+      } catch (error) {
+        next(error);
+        this.logger.dispatch('debug', error);
+      }
+    });
+  }
+
+  logout () {
+    this.router.get('/logout', this.verificationToken.checkAuthToken(), VerificationTokenMiddleware.removeToken(), async (req, res, next) => {
+      try {
+        return res.status(200).send({ mensagem: 'Usuário deslogado com sucesso.' });
       } catch (error) {
         next(error);
         this.logger.dispatch('debug', error);
