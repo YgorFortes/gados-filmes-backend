@@ -2,6 +2,7 @@ import { CustomHttpError } from '../../../erros/custom-http.error.js';
 import { Logger } from '../../../infra/logger/logger.service.js';
 import { CrudServiceUtils } from '../../../utils/crud/crud-service.utils.js';
 import { UtilsBcrypt } from '../../../utils/password/bcrypt.js';
+import { AuthService } from '../../auth/services/auth.services.js';
 import { MovieRepository } from '../../movie/repository/movie.repository.js';
 import { UserRepository } from '../repository/user.repository.js';
 import { ValidateUserSchema } from '../validators/user-schema.validator.js';
@@ -13,6 +14,7 @@ export class UserService extends CrudServiceUtils {
     this.movieRepository = new MovieRepository();
     this.validateUserSchema = new ValidateUserSchema();
     this.logger = new Logger();
+    this.authService = new AuthService();
   }
 
   async findAll () {
@@ -21,16 +23,22 @@ export class UserService extends CrudServiceUtils {
 
   async createUser (dataUse) {
     try {
-      let { senha, ...restObject } = dataUse;
-      senha = await UtilsBcrypt.hashPassword(senha);
+      const { senha, ...restObject } = dataUse;
+      const senhaHash = await UtilsBcrypt.hashPassword(senha);
       const newUserIfHash = {
         nome: restObject.nome,
         login: restObject.login,
         email: restObject.email,
-        senha
+        senha: senhaHash
       };
       const userValidated = await this.validateUserSchema.validateUserToRegister(newUserIfHash);
-      return this.userRepository.createUser(userValidated);
+      const newUser = await this.userRepository.createUser(userValidated);
+      const newUserWithoutHash = {
+        login: newUserIfHash.login,
+        senha
+      };
+      const { token } = await this.authService.login(newUserWithoutHash);
+      return { newUser, token };
     } catch (error) {
       CustomHttpError.checkAndThrowError(error);
       this.logger.dispatch('error', error.message);
