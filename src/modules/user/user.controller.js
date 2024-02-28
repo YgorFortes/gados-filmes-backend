@@ -21,8 +21,8 @@ export class UserController extends CrudControllerUtils {
     this.router.post('/cadastrar-usuario', async (req, res, next) => {
       try {
         const userBodyValidated = await this.validateUserSchema.validateUserToRegister(req.body);
-        await this.userService.createUser({ ...userBodyValidated });
-        return res.status(200).json({ mensagem: 'Usuário cadastrado com sucesso' });
+        const { token } = await this.userService.createUser({ ...userBodyValidated });
+        return res.status(200).json({ mensagem: 'Usuário cadastrado com sucesso', token });
       } catch (error) {
         next(error);
         this.logger.dispatch('debug', error);
