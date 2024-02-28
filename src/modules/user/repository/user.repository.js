@@ -22,8 +22,8 @@ export class UserRepository extends CrudRepositoryUtils {
     });
   }
 
-  createUser (dataUse) {
-    return this.prismaClient.user.create({
+  async createUser (dataUse) {
+    return await this.prismaClient.user.create({
       data: {
         login: dataUse.login,
         email: dataUse.email,
