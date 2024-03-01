@@ -7,7 +7,13 @@ export class VerificationTokenMiddleware {
   static tokenInvalids = [];
   constructor () {
     this.logger = new Logger(VerificationTokenMiddleware.name);
-    nodeCrom.schedule('0 9 * * 1', () => {
+    const MINUTES = '0'; // Execution at the beginning of every hour
+    const HOUR = '9'; // Execution at 9 o'clock in the morning
+    const DAY_OF_MONTH = '*'; // Execution on any day of the month
+    const MONTH = '*'; // Execution in any month
+    const DAY_OF_WEEK = '1'; // Execution on Monday
+
+    nodeCrom.schedule(`${MINUTES} ${HOUR} ${DAY_OF_MONTH} ${MONTH} ${DAY_OF_WEEK}`, () => {
       this.deletokenInOneWeek();
     });
   }
