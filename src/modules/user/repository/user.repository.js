@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { CrudRepositoryUtils } from '../../../utils/crud/crud-repository.utils.js';
 
 export class UserRepository extends CrudRepositoryUtils {
@@ -34,18 +35,18 @@ export class UserRepository extends CrudRepositoryUtils {
   }
 
   addMovieToUser (movieUserData, idUser) {
-    const { idFilme, classificacao = null } = movieUserData ?? {};
+    const { id_filme, classificacao = null } = movieUserData ?? {};
 
     return this.prismaClient.movies_users.create({
-      data: { idfilmes: idFilme, classificacao, idusuarios: idUser }
+      data: { id_filme, classificacao, id_usuario: idUser }
     });
   }
 
   findMovieUserAssociation (idMovie, idUser) {
     return this.prismaClient.movies_users.findFirst({
       where: {
-        idfilmes: idMovie,
-        idusuarios: idUser
+        id_filme: idMovie,
+        id_usuario: idUser
       }
     });
   }
@@ -73,21 +74,21 @@ export class UserRepository extends CrudRepositoryUtils {
     });
   }
 
-  rateMovieByUser (movieData, idUse) {
-    const { movieUserId, classificacao, idFilme } = movieData;
+  rateMovieByUser (movieData, idUser) {
+    const { movieUserId, classificacao, id_filme } = movieData;
     return this.prismaClient.movies_users.update({
-      where: { id: movieUserId, idfilmes: idFilme, idusuarios: idUse },
+      where: { id: movieUserId, id_filme, id_usuario: idUser },
       data: {
         classificacao
       }
     });
   }
 
-  deleteMovieUser (idusuarios, idfilmes) {
+  deleteMovieUser (id_usuario, id_filme) {
     return this.prismaClient.movies_users.deleteMany({
       where: {
-        idusuarios,
-        idfilmes
+        id_usuario,
+        id_filme
       }
     });
   }
