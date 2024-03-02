@@ -50,11 +50,11 @@ model Movie {
 
 model Movies_users {
   id Int @id @default(autoincrement())
-  idusuarios  Int
-  idfilmes  Int
+  id_usuario  Int
+  id_filme  Int
   classificacao  Int?
-  user User @relation(fields: [idusuarios ], references: [id])
-  movie Movie @relation(fields: [idfilmes], references: [id])
+  user User @relation(fields: [id_usuario], references: [id])
+  movie Movie @relation(fields: [id_filme], references: [id])
 }
 
 
