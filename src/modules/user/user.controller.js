@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { Logger } from '../../infra/logger/logger.service.js';
 import { VerificationTokenMiddleware } from '../../middlewares/verification-token.middleware.js';
 import { CrudControllerUtils } from '../../utils/crud/crud-controller.utils.js';
@@ -60,11 +61,10 @@ export class UserController extends CrudControllerUtils {
   }
 
   rateMovieByUser () {
-    this.router.patch('/classificar-filme/:idfilmes', this.verificationToken.checkAuthToken(), async (req, res, next) => {
+    this.router.patch('/classificar-filme/:id_filme', this.verificationToken.checkAuthToken(), async (req, res, next) => {
       try {
         const ratingSchemaValidator = await this.validateUserSchema.rateMovieByUser(req.body, req.params);
         const idUser = this.userUtils.getIdUserFromToken(req);
-
         const result = await this.userService.rateMovieByUser({ ...ratingSchemaValidator }, idUser);
         return res.status(200).send(result);
       } catch (error) {
@@ -77,8 +77,8 @@ export class UserController extends CrudControllerUtils {
     this.router.delete('/excluir-filme', this.verificationToken.checkAuthToken(), async (req, res, next) => {
       try {
         const idUsuario = this.userUtils.getIdUserFromToken(req);
-        const { idfilmes } = await this.validateUserSchema.validateIdMovie(req.body);
-        const movieDeleteResponse = await this.userService.deleteMovieUser(idUsuario, idfilmes);
+        const { id_filme } = await this.validateUserSchema.validateIdMovie(req.body);
+        const movieDeleteResponse = await this.userService.deleteMovieUser(idUsuario, id_filme);
         return res.status(200).send(movieDeleteResponse);
       } catch (error) {
         next(error);
