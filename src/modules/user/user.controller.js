@@ -14,15 +14,19 @@ export class UserController extends CrudControllerUtils {
     this.logger = new Logger();
     this.verificationToken = new VerificationTokenMiddleware();
     this.userUtils = new UtilsUser();
-    this.setupRouter(this.addMovieToUser(), this.findAllMoviesUser(), this.deleteMovieUser(), this.rateMovieByUser());
+    this.setupRouter(this.addMovieToUser());
+    this.setupRouter(this.findAllMoviesUser());
+    this.setupRouter(this.deleteMovieUser());
+    this.setupRouter(this.logout());
+    this.setupRouter(this.rateMovieByUser());
   }
 
   create () {
     this.router.post('/cadastrar-usuario', async (req, res, next) => {
       try {
         const userBodyValidated = await this.validateUserSchema.validateUserToRegister(req.body);
-        await this.userService.createUser({ ...userBodyValidated });
-        return res.status(200).json({ mensagem: 'Usuário cadastrado com sucesso' });
+        const { token } = await this.userService.createUser({ ...userBodyValidated });
+        return res.status(200).json({ mensagem: 'Usuário cadastrado com sucesso', token });
       } catch (error) {
         next(error);
         this.logger.dispatch('debug', error);
@@ -80,6 +84,17 @@ export class UserController extends CrudControllerUtils {
         const { id_filme } = await this.validateUserSchema.validateIdMovie(req.body);
         const movieDeleteResponse = await this.userService.deleteMovieUser(idUsuario, id_filme);
         return res.status(200).send(movieDeleteResponse);
+      } catch (error) {
+        next(error);
+        this.logger.dispatch('debug', error);
+      }
+    });
+  }
+
+  logout () {
+    this.router.get('/logout', this.verificationToken.checkAuthToken(), VerificationTokenMiddleware.removeToken(), async (req, res, next) => {
+      try {
+        return res.status(200).send({ mensagem: 'Usuário deslogado com sucesso.' });
       } catch (error) {
         next(error);
         this.logger.dispatch('debug', error);
